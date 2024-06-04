@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% load static %}
+
+{% block body %}
+	<!-- Page Preloder 
+	<div id="preloder">
+		<div class="loader"></div>
+	</div> -->
+
+	<!-- Header section -->
+	<!-- Hero section -->
+	<section class="hero-section mb-1">
+		<div class="hero-slider owl-carousel">
+			<div class="hero-slide-item set-bg" data-setbg="{% static 'res/img/slider-bg-1.jpg' %}">
+				<div class="hs-text">
+					<h2 class="hs-title-1"><span>Полезные рецепты</span></h2>
+					<h2 class="hs-title-2"><span>от лучших шеф-поваров</span></h2>
+					<h2 class="hs-title-3"><span>для всех гурманов</span></h2>
+				</div>
+			</div>
+			<div class="hero-slide-item set-bg" data-setbg="{% static 'res/img/slider-bg-2.jpg' %}">
+				<div class="hs-text">
+					<h2 class="hs-title-1"><span>Полезные рецепты</span></h2>
+					<h2 class="hs-title-2"><span>от лучших шеф-поваров</span></h2>
+					<h2 class="hs-title-3"><span>для всех гурманов</span></h2>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Hero section end -->
+
+	<!-- Add section end -->
+	<section class="add-section spad">
+		<div class="container">
+			<div class="add-warp">
+				<div class="add-slider owl-carousel">
+					<div class="as-item set-bg" data-setbg="{% static 'res/img/add/1.jpg' %}"></div>
+					<div class="as-item set-bg" data-setbg="{% static 'res/img/add/2.jpg' %}"></div>
+					<div class="as-item set-bg" data-setbg="{% static 'res/img/add/3.jpg' %}"></div>
+				</div>
+				<div class="row add-text-warp">
+					<div class="col-lg-4 col-md-5 offset-lg-8 offset-md-7">
+						<div class="add-text text-white">
+							<div class="at-style"></div>
+							<h2>Еженедельная функция</h2>
+							<ul>
+								<li>Легко приготовить</li>
+								<li>Вкусный</li>
+								<li>Полезные ингредиенты</li>
+								&nbsp;
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Add section end -->
+
+	<!-- Latest section -->
+	<section class="recipes-section spad pt-0 vh100">
+		<div class="container">
+			<div class="section-title">
+				<h2>Самые свежие рецепты</h2>
+			</div>
+			<div class="row">
+				{% for post in posts_latest %}
+                    <div class="col-lg-4 col-md-6">
+                        <a href="{% url 'DisplayPost' post.id %}">
+                            <div class="recipe">
+								<div class="thumbnail">
+                                    {% if post.thumbnail %}
+                                        <img src="{{ post.thumbnail.url }}" alt="">
+									 {% else %}
+										<img src="{% static 'res/img/recipes/1.jpg' %}" alt="">
+									{% endif %}
+                                </div>
+                                <div class="recipe-info-warp">
+                                    <div class="recipe-info">
+                                        <h3>{{ post.title }}</h3>
+                                        <!--<div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star is-fade"></i>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+			</div>
+		</div>
+	</section>
+	<!--- Latest section end -->
+	<style>
+		.gallery-slider {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 50px; /* Отступ между элементами */
+		}
+	
+		.gs-item {
+			width: 200px; /* Ширина изображения */
+			height: 150px; /* Высота изображения */
+			background-size: cover;
+			background-position: center center;
+		}
+	</style>
+	
+	<!-- Gallery section -->
+	<div class="gallery">
+		<div class="gallery-slider owl-carousel">
+			{% for post in posts_all %}				
+				{% if post.thumbnail %}
+                    <a href="{{ post.get_absolute_url }}"><div class="gs-item set-bg" data-setbg="{{ post.thumbnail.url }}"></div></a>
+				 {% else %}
+					<a href="{{ post.get_absolute_url }}"><div class="gs-item set-bg" data-setbg="{% static 'res/img/recipes/1.jpg' %}"></div></a>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	<!-- Gallery section end -->
+
+{% endblock %}

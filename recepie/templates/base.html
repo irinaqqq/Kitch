@@ -1,0 +1,157 @@
+<html>
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Кулинарный блог</title>
+
+    {% load static %}
+    
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <!-- Material Design Bootstrap -->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">-->
+
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">-->
+
+    <!-- Compiled and minified JavaScript -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    <link rel="stylesheet" href="{% static 'res/css/animate.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'res/css/owl.carousel.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'res/css/template-style.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'res/css/style.css' %}" type="text/css">
+    
+</head>
+    <body>
+        <header class="header-section">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-4">
+                <a class="pl-5 navbar-brand ml-auto" href="{% url 'Home' %}"><img src="{% static 'res/img/logo.png' %}" alt=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse container align-items-center pr-5" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item d-flex mr-3">
+                            <a class="nav-link align-self-center" href="{% url 'Profile' %}">Профиль</a>
+                        </li>
+                        <li class="nav-item d-flex mr-3">
+                            <a class="nav-link align-self-center" href="{% url 'CreatePost' %}">Напишите рецепт</a>
+                        </li>
+                        {% if user.is_staff %}
+                        <li class="nav-item d-flex mr-3">
+                            <a class="nav-link align-self-center" href="{% url 'admin:index' %}">Admin</a>
+                        </li>
+                        {% endif %}
+                        {% else %}
+                        <li class="nav-item d-flex mr-3">
+                            <a class="nav-link align-self-center" href="{% url 'Signup' %}">Регистрация</a>
+                        </li>
+                        <li class="nav-item d-flex mr-3">
+                            <a class="nav-link align-self-center" href="{% url 'Login' %}">Авторизоваться</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item d-flex mr-3">
+                            <a class="nav-link align-self-center" href="{% url 'Home' %}">Домой</a>
+                        </li>
+                        <li class="nav-item d-flex mr-3">
+                            <a class="nav-link align-self-center" href="{% url 'DisplayPosts' %}">Посмотреть рецепты</a>
+                        </li>
+                        <form  method="GET" action="{% url 'DisplayPosts' %}"  class="form-inline my-lg-0 d-flex align-items-center mr-3">
+                            <div class="header-search d-flex">
+                                <input name="q" class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+                                <button type="submit" class="btn btn-native"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </ul>
+                </div>
+            </nav>
+               <!-- <div class="container">
+                    <a href="index.html" class="site-logo">
+                        <img src="img/logo.png" alt="">
+                    </a>
+                    <div class="nav-switch">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                    <div class="header-search">
+                        <a href="#"><i class="fa fa-search"></i></a>
+                    </div>
+                    <ul class="main-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">Features</a></li>
+                        <li><a href="recipes.html">Receipies</a></li>
+                        <li><a href="#">Reviews</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>-->
+        </header>
+        {% block body %}
+        {% endblock %}
+        
+        <!-- Footer section  -->
+        <footer class="footer-section set-bg" data-setbg="{% static 'res/img/footer-bg.jpg' %}">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="footer-logo">
+                            <img src="{% static 'res/img/logo.png' %}" alt="">
+                        </div>
+                        {% comment %} <div class="footer-social">
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-dribbble"></i></a>
+                            <a href="#"><i class="fa fa-behance"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                        </div> {% endcomment %}
+                    </div>
+                    <div class="col-lg-6 text-lg-right">
+                        <ul class="footer-menu">
+                            <li><a href="{% url 'Home' %}">Домой</a></li>
+                            <li><a href="{% url 'DisplayPosts' %}">Рецепты</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+	<!-- Footer section end -->
+
+    <!--<script src="{% static 'js/stickynav.js' %}"></script>-->
+    <script src="{% static 'res/js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'res/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'res/js/main.js' %}"></script>
+    <script src="{% static 'res/js/add-ingredient.js' %}"></script>
+    <script src="{% static 'res/js/jquery.formset.js' %}"></script>
+    <script src="{% static 'res/js/site.js' %}"></script>
+</body>
+
+</html>
